@@ -10,14 +10,14 @@ export default function AgregarClientes() {
 
     const [cliente, setCliente] = useState({
         cedula: 0,
-        nombre: "",
-        apellido: "",
+        nombres: "",
+        apellidos: "",
         correo: "",
         telefono: 0,
         preferenciaContacto: ""
     });
 
-    const {cedula, nombre, apellido, correo, telefono} = cliente;
+    const {cedula, nombres, apellidos, correo, telefono} = cliente;
 
     const [selectedPreferencia, setSelectedPreferencia] = useState('');
 
@@ -52,14 +52,14 @@ export default function AgregarClientes() {
             value={cedula} onChange={(e) => onInputChange(e)}/>
         </div>
         <div className="mb-3">
-            <label htmlFor="nombre" className="form-label">Nombres</label>
-            <input type="text" className="form-control" id="nombre" name='nombre'
-            value={nombre} onChange={(e) => onInputChange(e)}/>
+            <label htmlFor="nombres" className="form-label">Nombres</label>
+            <input type="text" className="form-control" id="nombres" name='nombres'
+            value={nombres} onChange={(e) => onInputChange(e)}/>
         </div>
         <div className="mb-3">
-            <label htmlFor="apellido" className="form-label">Apellidos</label>
-            <input type="text" className="form-control" id="apellido" name='apellido'
-            value={apellido} onChange={(e) => onInputChange(e)}/>
+            <label htmlFor="apellidos" className="form-label">Apellidos</label>
+            <input type="text" className="form-control" id="apellidos" name='apellidos'
+            value={apellidos} onChange={(e) => onInputChange(e)}/>
         </div>
         <div className="mb-3">
             <label htmlFor="correo" className="form-label">Email</label>
