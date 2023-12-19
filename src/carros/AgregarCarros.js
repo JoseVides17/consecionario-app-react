@@ -14,23 +14,24 @@ export default function AgregarCarros() {
   const [selectedMarca, setSelectedMarca] = useState('');
   const [selectedLinea, setSelectedLinea] = useState('');
   const [selectedMotor, setSelectedMotor] = useState('');
+
   const [carro, setCarro] = useState({
     modeloCarroceria: "",
-    tipoVelocidad: "",
-    precio: "",
-    traccion: "",
     tecnologia: "",
-    tipoDireccion: "",
-    tipoSuspencion: "",
+    precio: 0,
     frenoDelantero: "",
     frenoTrasero: "",
-    marca: "",
-    linea: "",
-    motor: ""
+    tipoDireccion: "",
+    tipoSuspencion: "",
+    tipoVelocidad: "",
+    traccion: "",
+    marca:{idMarca: 0},
+    linea:{idLinea: 0},
+    motor:{idMotor: 0}
   })
 
-  const { modeloCarroceria, tipoVelocidad, precio, traccion, tecnologia, tipoDireccion,
-    tipoSuspencion, frenoDelantero, frenoTrasero, marca, linea, motor } = carro;
+  const { modeloCarroceria, tecnologia, precio, frenoDelantero, frenoTrasero,tipoDireccion,
+    tipoSuspencion, tipoVelocidad, traccion} = carro;
 
   const onInputChange = (e) => {
     setCarro({ ...carro, [e.target.name]: e.target.value })
@@ -38,27 +39,34 @@ export default function AgregarCarros() {
 
   const onMarcaChange = (e) => {
     const selectedMarcaId = e.target.value;
-    setSelectedMarca(selectedMarcaId);
-    setCarro({ ...carro, marca: selectedMarcaId });
+    const selectedMarca = marcas.find(marca => marca.idMarca === selectedMarcaId);
+    setSelectedMarca(selectedMarca);
+    setCarro({ ...carro, marca: { idMarca: selectedMarcaId } });
   }
-
+  
   const onLineaChange = (e) => {
     const selectedLineaId = e.target.value;
-    setSelectedLinea(selectedLineaId);
-    setCarro({ ...carro, linea: selectedLineaId });
+    const selectedLinea = lineas.find(linea => linea.idLinea === selectedLineaId);
+    setSelectedLinea(selectedLinea);
+    setCarro({ ...carro, linea: { idLinea: selectedLineaId } });
   }
-
+  
   const onMotorChange = (e) => {
     const selectedMotorId = e.target.value;
-    setSelectedMotor(selectedMotorId);
-    setCarro({ ...carro, motor: selectedMotorId });
+    const selectedMotor = motores.find(motor => motor.idMotor === selectedMotorId);
+    setSelectedMotor(selectedMotor);
+    setCarro({ ...carro, motor: { idMotor: selectedMotorId } });
   }
-
   const onSubmit = async (e) => {
     e.preventDefault();
     const urlBase = "http://localhost:8080/consecionario-app/carros";
-    await axios.post(urlBase, carro);
-    navegacion('/');
+    console.log("Datos del carro a enviar:", carro);
+    try {
+      await axios.post(urlBase, carro);
+      navegacion('/');
+    } catch (error) {
+      console.error("Error en la solicitud:", error);
+    }
   }
 
   useEffect(() => {
@@ -96,15 +104,15 @@ export default function AgregarCarros() {
         <h1>Agregar Carro</h1>
       </div>
       <form onSubmit={(e) => onSubmit(e)} >
-        <div className="mb-3">
-          <label htmlFor="carroceria" className="form-label">Carroceria</label>
-          <input type="text" className="form-control" id="carroceria" name='carroceria' required={true}
+      <div className="mb-3">
+          <label htmlFor="modeloCarroceria" className="form-label">Modelo Carroceria</label>
+          <input type="text" className="form-control" id="modeloCarroceria" name='modeloCarroceria' required={true}
             value={modeloCarroceria} onChange={(e) => onInputChange(e)} />
         </div>
         <div className="mb-3">
-          <label htmlFor="tipoVelocidad" className="form-label">Tipo Velocidad</label>
-          <input type="text" className="form-control" id="tipoVelocidad" name='tipoVelocidad'
-            value={tipoVelocidad} onChange={(e) => onInputChange(e)} />
+          <label htmlFor="tecnologia" className="form-label">Tecnologia</label>
+          <input type="text" className="form-control" id="tecnologia" name="tecnologia"
+            value={tecnologia} onChange={(e) => onInputChange(e)} />
         </div>
         <div className="mb-3">
           <label htmlFor="precio" className="form-label">Precio</label>
@@ -112,14 +120,14 @@ export default function AgregarCarros() {
             value={precio} onChange={(e) => onInputChange(e)} />
         </div>
         <div className="mb-3">
-          <label htmlFor="traccion" className="form-label">Traccion</label>
-          <input type="text" className="form-control" id="traccion" name="traccion"
-            value={traccion} onChange={(e) => onInputChange(e)} />
+          <label htmlFor="frenoDelantero" className="form-label">Freno Delantero</label>
+          <input type="text" className="form-control" id="frenoDelantero" name="frenoDelantero"
+            value={frenoDelantero} onChange={(e) => onInputChange(e)} />
         </div>
         <div className="mb-3">
-          <label htmlFor="tecnologia" className="form-label">Tecnologia</label>
-          <input type="text" className="form-control" id="tecnologia" name="tecnologia"
-            value={tecnologia} onChange={(e) => onInputChange(e)} />
+          <label htmlFor="frenoTrasero" className="form-label">Freno Trasero</label>
+          <input type="text" className="form-control" id="frenoTrasero" name="frenoTrasero"
+            value={frenoTrasero} onChange={(e) => onInputChange(e)} />
         </div>
         <div className="mb-3">
           <label htmlFor="tipoDireccion" className="form-label">Tipo Direccion</label>
@@ -132,21 +140,21 @@ export default function AgregarCarros() {
             value={tipoSuspencion} onChange={(e) => onInputChange(e)} />
         </div>
         <div className="mb-3">
-          <label htmlFor="frenoDelantero" className="form-label">Freno Delantero</label>
-          <input type="text" className="form-control" id="frenoDelantero" name="frenoDelantero"
-            value={frenoDelantero} onChange={(e) => onInputChange(e)} />
+          <label htmlFor="tipoVelocidad" className="form-label">Tipo Velocidad</label>
+          <input type="text" className="form-control" id="tipoVelocidad" name='tipoVelocidad'
+            value={tipoVelocidad} onChange={(e) => onInputChange(e)} />
         </div>
         <div className="mb-3">
-          <label htmlFor="frenoTrasero" className="form-label">Freno Trasero</label>
-          <input type="text" className="form-control" id="frenoTrasero" name="frenoTrasero"
-            value={frenoTrasero} onChange={(e) => onInputChange(e)} />
+          <label htmlFor="traccion" className="form-label">Traccion</label>
+          <input type="text" className="form-control" id="traccion" name="traccion"
+            value={traccion} onChange={(e) => onInputChange(e)} />
         </div>
         <div>
           <select className="form-select" style={{marginTop: "10px"}} aria-label="Escoja la marca del carro" onChange={onMarcaChange} value={selectedMarca}>
-            <option enableb selected>Seleccione la marca</option>
+            <option enabled selected>Seleccione la marca</option>
             {
-              marcas.map((marca) => (
-                <option key={marca.idMarca} value={marca.idMarca}>{marca.idMarca} - {marca.nombre}</option>
+              marcas.map((marca, indice) => (
+                <option key={indice} value={marca.idMarca}>{marca.idMarca} - {marca.nombre}</option>
               ))
             }
           </select>
@@ -155,18 +163,18 @@ export default function AgregarCarros() {
           <select className="form-select" style={{marginTop: "10px"}} aria-label="Escoja la linea del carro" onChange={onLineaChange} value={selectedLinea}>
             <option enabled selected>Seleccione la Linea</option>
             {
-              lineas.map((linea) => (
-                <option key={linea.idLinea} value={linea.idLinea}>{linea.idLinea} - {linea.nombre}</option>
+              lineas.map((linea, indice) => (
+                <option key={indice} value={linea.idLinea}>{linea.idLinea} - {linea.nombre}</option>
               ))
             }
           </select>
         </div>
         <div>
           <select className="form-select" style={{marginTop: "10px"}} aria-label="Escoja el motor del carro" onChange={onMotorChange} value={selectedMotor}>
-            <option enableb selected>Seleccione el motor</option>
+            <option enabled selected>Seleccione el motor</option>
             {
-              motores.map((motor) => (
-                <option key={motor.idMotor} value={motor.idMotor}>{motor.idMotor} - {motor.marcaMotor}</option>
+              motores.map((motor, indice) => (
+                <option key={indice} value={motor.idMotor}>{motor.idMotor} - {motor.marcaMotor}</option>
               ))
             }
           </select>
