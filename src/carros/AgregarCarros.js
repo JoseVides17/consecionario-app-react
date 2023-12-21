@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 export default function AgregarCarros() {
+  
   let navegacion = useNavigate();
 
   const urlBaseMarcas = "http://localhost:8080/consecionario-app/marcas";
@@ -25,13 +26,13 @@ export default function AgregarCarros() {
     tipoSuspencion: "",
     tipoVelocidad: "",
     traccion: "",
-    marca:{idMarca: 0},
-    linea:{idLinea: 0},
-    motor:{idMotor: 0}
+    marca: { idMarca: 0 },
+    linea: { idLinea: 0 },
+    motor: { idMotor: 0 }
   })
 
-  const { modeloCarroceria, tecnologia, precio, frenoDelantero, frenoTrasero,tipoDireccion,
-    tipoSuspencion, tipoVelocidad, traccion} = carro;
+  const { modeloCarroceria, tecnologia, precio, frenoDelantero, frenoTrasero, tipoDireccion,
+    tipoSuspencion, tipoVelocidad, traccion } = carro;
 
   const onInputChange = (e) => {
     setCarro({ ...carro, [e.target.name]: e.target.value })
@@ -43,14 +44,14 @@ export default function AgregarCarros() {
     setSelectedMarca(selectedMarca);
     setCarro({ ...carro, marca: { idMarca: selectedMarcaId } });
   }
-  
+
   const onLineaChange = (e) => {
     const selectedLineaId = e.target.value;
     const selectedLinea = lineas.find(linea => linea.idLinea === selectedLineaId);
     setSelectedLinea(selectedLinea);
     setCarro({ ...carro, linea: { idLinea: selectedLineaId } });
   }
-  
+
   const onMotorChange = (e) => {
     const selectedMotorId = e.target.value;
     const selectedMotor = motores.find(motor => motor.idMotor === selectedMotorId);
@@ -99,93 +100,100 @@ export default function AgregarCarros() {
   }
 
   return (
-    <div className='container'>
+    <div className='container bg-info'>
       <div className='container text-center' style={{ margin: "30px" }}>
         <h1>Agregar Carro</h1>
       </div>
       <div>
-      <form onSubmit={(e) => onSubmit(e)} >
-      <div className="mb-3">
-          <label htmlFor="modeloCarroceria" className="form-label">Modelo Carroceria</label>
-          <input type="text" className="form-control" id="modeloCarroceria" name='modeloCarroceria' required={true}
-            value={modeloCarroceria} onChange={(e) => onInputChange(e)} />
+        <form onSubmit={(e) => onSubmit(e)} >
+        <div className="row g-3">
+        <div className="col">
+            <label htmlFor="modeloCarroceria" className="form-label">Modelo Carroceria</label>
+            <input type="text" className="form-control" id="modeloCarroceria" name='modeloCarroceria' required={true}
+              value={modeloCarroceria} onChange={(e) => onInputChange(e)} />
+          </div>
+          <div className="col">
+            <label htmlFor="tecnologia" className="form-label">Tecnologia</label>
+            <input type="text" className="form-control" id="tecnologia" name="tecnologia"
+              value={tecnologia} onChange={(e) => onInputChange(e)} />
+          </div>
+          <div className="col">
+            <label htmlFor="precio" className="form-label">Precio</label>
+            <input type="number" step="any" className="form-control" id="precio" name="precio"
+              value={precio} onChange={(e) => onInputChange(e)} />
+          </div>
         </div>
-        <div className="mb-3">
-          <label htmlFor="tecnologia" className="form-label">Tecnologia</label>
-          <input type="text" className="form-control" id="tecnologia" name="tecnologia"
-            value={tecnologia} onChange={(e) => onInputChange(e)} />
+        <div className="row g-3">
+        <div className="col">
+            <label htmlFor="frenoDelantero" className="form-label">Freno Delantero</label>
+            <input type="text" className="form-control" id="frenoDelantero" name="frenoDelantero"
+              value={frenoDelantero} onChange={(e) => onInputChange(e)} />
+          </div>
+          <div className="col">
+            <label htmlFor="frenoTrasero" className="form-label">Freno Trasero</label>
+            <input type="text" className="form-control" id="frenoTrasero" name="frenoTrasero"
+              value={frenoTrasero} onChange={(e) => onInputChange(e)} />
+          </div>
+          <div className="col">
+            <label htmlFor="tipoDireccion" className="form-label">Tipo Direccion</label>
+            <input type="text" className="form-control" id="tipoDireccion" name="tipoDireccion"
+              value={tipoDireccion} onChange={(e) => onInputChange(e)} />
+          </div>
+        </div>  
+        <div className="row g-3">
+        <div className="col">
+            <label htmlFor="tipoSuspencion" className="form-label">Tipo Suspencion</label>
+            <input type="text" className="form-control" id="tipoSuspencion" name="tipoSuspencion"
+              value={tipoSuspencion} onChange={(e) => onInputChange(e)} />
+          </div>
+          <div className="col">
+            <label htmlFor="tipoVelocidad" className="form-label">Tipo Velocidad</label>
+            <input type="text" className="form-control" id="tipoVelocidad" name='tipoVelocidad'
+              value={tipoVelocidad} onChange={(e) => onInputChange(e)} />
+          </div>
+          <div className="col">
+            <label htmlFor="traccion" className="form-label">Traccion</label>
+            <input type="text" className="form-control" id="traccion" name="traccion"
+              value={traccion} onChange={(e) => onInputChange(e)} />
+          </div>
         </div>
-        <div className="mb-3">
-          <label htmlFor="precio" className="form-label">Precio</label>
-          <input type="number" step="any" className="form-control" id="precio" name="precio"
-            value={precio} onChange={(e) => onInputChange(e)} />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="frenoDelantero" className="form-label">Freno Delantero</label>
-          <input type="text" className="form-control" id="frenoDelantero" name="frenoDelantero"
-            value={frenoDelantero} onChange={(e) => onInputChange(e)} />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="frenoTrasero" className="form-label">Freno Trasero</label>
-          <input type="text" className="form-control" id="frenoTrasero" name="frenoTrasero"
-            value={frenoTrasero} onChange={(e) => onInputChange(e)} />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="tipoDireccion" className="form-label">Tipo Direccion</label>
-          <input type="text" className="form-control" id="tipoDireccion" name="tipoDireccion"
-            value={tipoDireccion} onChange={(e) => onInputChange(e)} />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="tipoSuspencion" className="form-label">Tipo Suspencion</label>
-          <input type="text" className="form-control" id="tipoSuspencion" name="tipoSuspencion"
-            value={tipoSuspencion} onChange={(e) => onInputChange(e)} />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="tipoVelocidad" className="form-label">Tipo Velocidad</label>
-          <input type="text" className="form-control" id="tipoVelocidad" name='tipoVelocidad'
-            value={tipoVelocidad} onChange={(e) => onInputChange(e)} />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="traccion" className="form-label">Traccion</label>
-          <input type="text" className="form-control" id="traccion" name="traccion"
-            value={traccion} onChange={(e) => onInputChange(e)} />
-        </div>
-        <div>
-          <select className="form-select" style={{marginTop: "10px"}} aria-label="Escoja la marca del carro" onChange={onMarcaChange} value={selectedMarca}>
-            <option enabled selected>Seleccione la marca</option>
-            {
-              marcas.map((marca, indice) => (
-                <option key={indice} value={marca.idMarca}>{marca.idMarca} - {marca.nombre}</option>
-              ))
-            }
-          </select>
-        </div>
-        <div>
-          <select className="form-select" style={{marginTop: "10px"}} aria-label="Escoja la linea del carro" onChange={onLineaChange} value={selectedLinea}>
-            <option enabled selected>Seleccione la Linea</option>
-            {
-              lineas.map((linea, indice) => (
-                <option key={indice} value={linea.idLinea}>{linea.idLinea} - {linea.nombre}</option>
-              ))
-            }
-          </select>
-        </div>
-        <div>
-          <select className="form-select" style={{marginTop: "10px"}} aria-label="Escoja el motor del carro" onChange={onMotorChange} value={selectedMotor}>
-            <option enabled selected>Seleccione el motor</option>
-            {
-              motores.map((motor, indice) => (
-                <option key={indice} value={motor.idMotor}>{motor.idMotor} - {motor.marcaMotor}</option>
-              ))
-            }
-          </select>
-        </div>
-        <div className='text-center' style={{margin: "20px"}}>
-          <button type="submit" className="btn btn-warning btn-sm me-3">Agregar</button>
-          <a href='/' className='btn btn-danger btn-sm'>Regresar</a>
-        </div>
+          
+          <div>
+            <select className="form-select" style={{ marginTop: "10px" }} aria-label="Escoja la marca del carro" onChange={onMarcaChange} value={selectedMarca}>
+              <option enabled selected>Seleccione la marca</option>
+              {
+                marcas.map((marca, indice) => (
+                  <option key={indice} value={marca.idMarca}>{marca.idMarca} - {marca.nombre}</option>
+                ))
+              }
+            </select>
+          </div>
+          <div>
+            <select className="form-select" style={{ marginTop: "10px" }} aria-label="Escoja la linea del carro" onChange={onLineaChange} value={selectedLinea}>
+              <option enabled selected>Seleccione la Linea</option>
+              {
+                lineas.map((linea, indice) => (
+                  <option key={indice} value={linea.idLinea}>{linea.idLinea} - {linea.nombre}</option>
+                ))
+              }
+            </select>
+          </div>
+          <div>
+            <select className="form-select" style={{ marginTop: "10px" }} aria-label="Escoja el motor del carro" onChange={onMotorChange} value={selectedMotor}>
+              <option enabled selected>Seleccione el motor</option>
+              {
+                motores.map((motor, indice) => (
+                  <option key={indice} value={motor.idMotor}>{motor.idMotor} - {motor.marcaMotor}</option>
+                ))
+              }
+            </select>
+          </div>
+          <div className='text-center' style={{ margin: "20px" }}>
+            <button type="submit" className="btn btn-warning btn-sm me-3 mb-4">Agregar</button>
+            <a href='/' className='btn btn-danger btn-sm mb-4'>Regresar</a>
+          </div>
 
-      </form>
+        </form>
       </div>
     </div>
   )

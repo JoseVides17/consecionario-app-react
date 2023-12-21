@@ -39,9 +39,9 @@ export default function AgregarClientes() {
       }
 
   return (
-    <div className='container'>
+    <div className='container bg-info'>
         <div className='container text-center'>
-            <h1>
+            <h1 style={{margin: "30px"}}>
                 Agregar Cliente
             </h1>
         </div>
@@ -77,9 +77,9 @@ export default function AgregarClientes() {
             <option value="Correo">Correo</option>
             <option value="WathsApp">WathsApp</option>
         </select>
-        <div style={{marginTop: "90px"}}>
-        <button type="submit" className="btn btn-warning btn-sm me-3">Agregar</button>
-        <a href='/' className='btn btn-danger btn-sm'>Regresar</a>
+        <div className='container text-center' style={{marginTop: "30px"}}>
+        <button type="submit" className="btn btn-warning btn-sm me-3 mb-4">Agregar</button>
+        <a href='/' className='btn btn-danger btn-sm mb-4'>Regresar</a>
         </div>
         </form>
 

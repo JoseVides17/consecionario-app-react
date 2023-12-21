@@ -21,7 +21,7 @@ export default function ListadoCarros() {
     }
 
   return (
-    <div className="container">
+    <div className="container bg-info">
         <div className="container text-center" style={{margin: "40px"}}>
             <h1>CONSECIONARIO APP</h1>
         </div>
@@ -29,7 +29,7 @@ export default function ListadoCarros() {
         {
             carros.map((carro, indice) => (
                 <div key={indice} className="col-md-3">
-                    <div className="card" style={{width: '18rem'}}>
+                    <div className="card mb-4" style={{width: '18rem'}}>
                     <img src={audi} className="card-img-top" alt={carro.idCarro}/>
                     <div className="card-body">
                         <h5 className="card-title">{carro.marca.nombre}</h5>

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 export default function Navegacion() {
   return (
-    <div className='container'>
+    <div className='container bg-info'>
         <nav className="navbar navbar-expand-lg bg-body-secondary">
         <div className="container-fluid">
             <a className="navbar-brand" href="/">Consecionario</a>
