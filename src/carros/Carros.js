@@ -1,12 +1,15 @@
 import axios from "axios";
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from "react-router-dom";
-export default function AgregarCarros() {
+import { useNavigate, useParams } from "react-router-dom";
+export default function Carros() {
   let navegacion = useNavigate();
 
   const urlBaseMarcas = "http://localhost:8080/consecionario-app/marcas";
   const urlBaseLineas = "http://localhost:8080/consecionario-app/lineas";
   const urlBaseMotores = "http://localhost:8080/consecionario-app/motores";
+  const urlBase = "http://localhost:8080/consecionario-app/carros";
+
+  const {id} = useParams();
 
   const [marcas, setMarcas] = useState([]);
   const [lineas, setLineas] = useState([]);
@@ -32,6 +35,15 @@ export default function AgregarCarros() {
 
   const { modeloCarroceria, tecnologia, precio, frenoDelantero, frenoTrasero,tipoDireccion,
     tipoSuspencion, tipoVelocidad, traccion} = carro;
+
+    useEffect(()=>{
+        cargarCarros();
+    }, [])
+
+    const cargarCarros = async ()=>{
+        const resultado = await axios.get(`${urlBase}/${id}`);
+        setCarro(resultado.data);
+    }
 
   const onInputChange = (e) => {
     setCarro({ ...carro, [e.target.name]: e.target.value })
@@ -59,7 +71,6 @@ export default function AgregarCarros() {
   }
   const onSubmit = async (e) => {
     e.preventDefault();
-    const urlBase = "http://localhost:8080/consecionario-app/carros";
     console.log("Datos del carro a enviar:", carro);
     try {
       await axios.post(urlBase, carro);
@@ -99,11 +110,10 @@ export default function AgregarCarros() {
   }
 
   return (
-    <div className='container'>
+    <div className='container' style={{ width: '30%', height: '30%'}}>
       <div className='container text-center' style={{ margin: "30px" }}>
-        <h1>Agregar Carro</h1>
+        <h1>Editar Carro</h1>
       </div>
-      <div>
       <form onSubmit={(e) => onSubmit(e)} >
       <div className="mb-3">
           <label htmlFor="modeloCarroceria" className="form-label">Modelo Carroceria</label>
@@ -151,42 +161,37 @@ export default function AgregarCarros() {
             value={traccion} onChange={(e) => onInputChange(e)} />
         </div>
         <div>
-          <select className="form-select" style={{marginTop: "10px"}} aria-label="Escoja la marca del carro" onChange={onMarcaChange} value={selectedMarca}>
-            <option enabled selected>Seleccione la marca</option>
-            {
-              marcas.map((marca, indice) => (
-                <option key={indice} value={marca.idMarca}>{marca.idMarca} - {marca.nombre}</option>
-              ))
-            }
+        <label className="form-label">Marca</label>
+          <select className="form-select" aria-label="Escoja la marca del carro">
+            <option disabled selected>Seleccione la marca</option>
+            
+                <option enabled selected value={carro.marca.idMarca}>{carro.marca.idMarca} - {carro.marca.nombre}</option>
+            
           </select>
         </div>
         <div>
-          <select className="form-select" style={{marginTop: "10px"}} aria-label="Escoja la linea del carro" onChange={onLineaChange} value={selectedLinea}>
-            <option enabled selected>Seleccione la Linea</option>
-            {
-              lineas.map((linea, indice) => (
-                <option key={indice} value={linea.idLinea}>{linea.idLinea} - {linea.nombre}</option>
-              ))
-            }
+        <label className="form-label">Linea</label>
+          <select className="form-select" aria-label="Escoja la linea del carro">
+            <option disabled selected>Seleccione la Linea</option>
+           
+                <option enabled selected value={carro.linea.idLinea}>{carro.linea.idLinea} - {carro.linea.nombre}</option>
+            
           </select>
         </div>
         <div>
-          <select className="form-select" style={{marginTop: "10px"}} aria-label="Escoja el motor del carro" onChange={onMotorChange} value={selectedMotor}>
-            <option enabled selected>Seleccione el motor</option>
-            {
-              motores.map((motor, indice) => (
-                <option key={indice} value={motor.idMotor}>{motor.idMotor} - {motor.marcaMotor}</option>
-              ))
-            }
+        <label className="form-label">Motor</label>
+          <select className="form-select" aria-label="Escoja el motor del carro">
+            <option disabled selected>Seleccione el motor</option>
+            
+                <option enabled selected value={carro.motor.idMotor}>{carro.motor.idMotor} - {carro.motor.marcaMotor}</option>
+             
           </select>
         </div>
         <div className='text-center' style={{margin: "20px"}}>
-          <button type="submit" className="btn btn-warning btn-sm me-3">Agregar</button>
           <a href='/' className='btn btn-danger btn-sm'>Regresar</a>
         </div>
 
       </form>
-      </div>
     </div>
   )
 }
